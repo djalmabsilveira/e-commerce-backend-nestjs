@@ -12,7 +12,7 @@ import { PaymentModule } from './payment/payment.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ReportsModule } from './reports/reports.module';
 import { AdminModule } from './admin/admin.module';
-import { DatabaseModule } from './database/database.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { DatabaseModule } from './database/database.module';
     NotificationsModule,
     ReportsModule,
     AdminModule,
-    DatabaseModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

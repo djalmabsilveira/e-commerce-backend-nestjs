@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Customer {
+  id String @id @default(uuid())
+
+  email    String @unique
+  password String
+
+  name         String
+  // confirmEmail Boolean @default(false)
+  // tenant       Tenant  @relation(fields: [tenantUuid], references: [uuid])
+  // tenantUuid   String  @unique
+}
+
+// model Tenant {
+//   uuid String @id @default(uuid())
+//   user User?
+
+//   categoria Categoria[]
+// }
+
+// model Categoria {
+//   uuid       String  @id @default(uuid())
+//   categoria  String
+//   tenant     Tenant? @relation(fields: [tenantUuid], references: [uuid])
+//   tenantUuid String
+// }
