@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Customer {
-  id           Int       @id @default(autoincrement())
+  id           String    @id @default(uuid())
   customerName String
   password     String
   email        String    @unique
@@ -23,7 +23,7 @@ model Customer {
 }
 
 model Product {
-  id          Int         @id @default(autoincrement())
+  id          String      @id @default(uuid())
   productName String
   description String
   price       Float
@@ -34,7 +34,7 @@ model Product {
 }
 
 model Admin {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid())
   adminName String
   password  String
   email     String    @unique
@@ -44,28 +44,28 @@ model Admin {
 }
 
 model Order {
-  id         Int         @id @default(autoincrement())
+  id         String      @id @default(uuid())
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  customerId Int
+  customerId String
   customer   Customer    @relation(fields: [customerId], references: [id])
   orderItems OrderItem[]
 }
 
 model OrderItem {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   quantity  Int
   price     Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  orderId   Int
+  orderId   String
   order     Order    @relation(fields: [orderId], references: [id])
-  productId Int
+  productId String
   product   Product  @relation(fields: [productId], references: [id])
 }
 
 model Address {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(uuid())
   street     String
   city       String
   state      String
@@ -73,8 +73,8 @@ model Address {
   zipCode    String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  customerId Int?      @unique
+  customerId String?   @unique
   customer   Customer? @relation(fields: [customerId], references: [id])
-  adminId    Int?      @unique
+  adminId    String?   @unique
   admin      Admin?    @relation(fields: [adminId], references: [id])
 }
