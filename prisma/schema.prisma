@@ -12,27 +12,69 @@ datasource db {
 }
 
 model Customer {
-  id String @id @default(uuid())
-
-  email    String @unique
-  password String
-
-  name         String
-  // confirmEmail Boolean @default(false)
-  // tenant       Tenant  @relation(fields: [tenantUuid], references: [uuid])
-  // tenantUuid   String  @unique
+  id           Int       @id @default(autoincrement())
+  customerName String
+  password     String
+  email        String    @unique
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  orders       Order[]
+  addresses    Address[]
 }
 
-// model Tenant {
-//   uuid String @id @default(uuid())
-//   user User?
+model Product {
+  id          Int         @id @default(autoincrement())
+  productName String
+  description String
+  price       Float
+  stock       Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+}
 
-//   categoria Categoria[]
-// }
+model Admin {
+  id        Int       @id @default(autoincrement())
+  adminName String
+  password  String
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  addresses Address[]
+}
 
-// model Categoria {
-//   uuid       String  @id @default(uuid())
-//   categoria  String
-//   tenant     Tenant? @relation(fields: [tenantUuid], references: [uuid])
-//   tenantUuid String
-// }
+model Order {
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  customerId Int
+  customer   Customer    @relation(fields: [customerId], references: [id])
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Address {
+  id         Int       @id @default(autoincrement())
+  street     String
+  city       String
+  state      String
+  country    String
+  zipCode    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  customerId Int?      @unique
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  adminId    Int?      @unique
+  admin      Admin?    @relation(fields: [adminId], references: [id])
+}
