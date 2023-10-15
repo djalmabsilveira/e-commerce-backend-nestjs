@@ -3,7 +3,7 @@ import { Entity } from 'typeorm';
 
 @Entity()
 export class Product {
-  id: number;
+  id: string;
   productName: string;
   description: string;
   price: number;

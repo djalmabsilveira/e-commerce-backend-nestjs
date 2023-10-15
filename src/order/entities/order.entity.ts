@@ -4,7 +4,7 @@ import { OrderItem } from './orderItem.entity';
 
 @Entity()
 export class Order {
-  id: number;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
   customer: Customer;

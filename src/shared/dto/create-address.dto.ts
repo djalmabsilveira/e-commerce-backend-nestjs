@@ -2,17 +2,17 @@ import { IsString } from 'class-validator';
 
 export class CreateAddressDto {
   @IsString()
-  readonly street: string;
+  street: string;
 
   @IsString()
-  readonly city: string;
+  city: string;
 
   @IsString()
-  readonly state: string;
+  state: string;
 
   @IsString()
-  readonly country: string;
+  country: string;
 
   @IsString()
-  readonly zipCode: string;
+  zipCode: string;
 }
