@@ -11,12 +11,12 @@ export class CustomerService {
     const { address, ...customer } = createCustomerDto;
 
     const hashedPassword = await bcrypt.hash(customer.password, 10);
-    
+
     const createdAddress = await this.prisma.address.create({
       data: address,
     });
 
-    const createdUser = await this.prisma.customer.create({
+    const createdCustomer = await this.prisma.customer.create({
       data: {
         ...customer,
         password: hashedPassword,
@@ -28,19 +28,15 @@ export class CustomerService {
       },
     });
 
-    return createdUser;
-
+    return {
+      ...createdCustomer,
+      password: undefined,
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
-  }
-
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  findByEmail(email: string) {
+    return this.prisma.customer.findUnique({
+      where: { email },
+    });
   }
 }
