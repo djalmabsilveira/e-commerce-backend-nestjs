@@ -4,7 +4,7 @@ import { Entity } from 'typeorm';
 
 @Entity()
 export class Address {
-  id: number;
+  id: string;
   street: string;
   city: string;
   state: string;
