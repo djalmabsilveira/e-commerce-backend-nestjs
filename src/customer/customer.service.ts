@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateCustomerDto } from './dto/create-customer.dto';
 @Injectable()
 export class CustomerService {
   constructor(private readonly prisma: PrismaService) {}
