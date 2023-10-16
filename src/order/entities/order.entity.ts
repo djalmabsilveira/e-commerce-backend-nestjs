@@ -1,4 +1,4 @@
-import { Customer } from 'src/customer/entities/customer.entity';
+import { User } from 'src/user/entities/user.entity';
 import { Entity } from 'typeorm';
 import { OrderItem } from './orderItem.entity';
 
@@ -7,6 +7,6 @@ export class Order {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  customer: Customer;
+  user: User;
   orderItems: OrderItem[];
 }

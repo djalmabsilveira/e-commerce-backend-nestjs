@@ -6,27 +6,18 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { AdminAuthGuard } from 'src/guards/admin-auth.guard';
-import { CustomerAuthGuard } from 'src/guards/customer-auth.guard';
 import { AuthService } from './auth.service';
-import { AdminAuthRequest } from './models/AdminAuthRequest';
-import { CustomerAuthRequest } from './models/CustomerAuthRequest';
+import { UserAuthRequest } from './models/UserAuthRequest';
+import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 
 @Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/customer/login')
+  @Post('/login')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(CustomerAuthGuard)
-  async customerLogin(@Request() req: CustomerAuthRequest) {
-    return this.authService.customerLogin(req.user);
-  }
-
-  @Post('/admin/login')
-  @HttpCode(HttpStatus.OK)
-  @UseGuards(AdminAuthGuard)
-  async adminLogin(@Request() req: AdminAuthRequest) {
-    return this.authService.adminLogin(req.user);
+  @UseGuards(LocalAuthGuard)
+  async login(@Request() req: UserAuthRequest) {
+    return this.authService.login(req.user);
   }
 }

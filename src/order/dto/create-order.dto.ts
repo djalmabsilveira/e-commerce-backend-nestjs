@@ -2,5 +2,5 @@ import { IsNumber } from 'class-validator';
 
 export class CreateOrderDto {
   @IsNumber()
-  readonly customerId: string;
+  readonly userId: string;
 }

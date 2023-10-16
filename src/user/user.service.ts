@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { Admin } from './entities/admin.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
-export class AdminService {
+export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createAdiminDto: CreateAdminDto): Promise<Admin> {
-    const { address, ...admin } = createAdiminDto;
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const { address, ...user } = createUserDto;
 
-    const hashedPassword = await bcrypt.hash(admin.password, 10);
+    const hashedPassword = await bcrypt.hash(user.password, 10);
 
     const createdAddress = await this.prisma.address.create({
       data: address,
     });
 
-    const createdAdmin = await this.prisma.admin.create({
+    const createdUser = await this.prisma.user.create({
       data: {
-        ...admin,
+        ...user,
         password: hashedPassword,
         addresses: {
           connect: {
@@ -30,13 +30,13 @@ export class AdminService {
     });
 
     return {
-      ...createdAdmin,
+      ...createdUser,
       password: undefined,
     };
   }
 
-  async findByEmail(email: string): Promise<Admin> {
-    return await this.prisma.admin.findUnique({
+  async findByEmail(email: string): Promise<User> {
+    return await this.prisma.user.findUnique({
       where: { email },
     });
   }
