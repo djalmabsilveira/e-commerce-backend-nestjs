@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { Admin } from 'src/admin/entities/admin.entity';
 
-export interface CustomerAuthRequest extends Request {
+export interface AdminAuthRequest extends Request {
   user: Admin;
 }

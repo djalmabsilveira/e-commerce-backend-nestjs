@@ -1,15 +1,35 @@
-import { IsString, IsEmail } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsDefined,
+  IsEmail,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
+import { CreateAddressDto } from 'src/shared/dto/create-address.dto';
 
 export class CreateAdminDto {
   @IsString()
-  readonly adminName: string;
+  adminName: string;
 
   @IsString()
-  readonly password: string;
+  @MinLength(4)
+  @MaxLength(20)
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'password is too weak',
+  })
+  password: string;
 
   @IsString()
-  readonly accessLevel: string;
+  accessLevel: string;
 
   @IsEmail()
-  readonly email: string;
+  email: string;
+
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => CreateAddressDto)
+  address: CreateAddressDto;
 }
