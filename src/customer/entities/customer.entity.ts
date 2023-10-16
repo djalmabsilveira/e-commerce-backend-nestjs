@@ -10,6 +10,6 @@ export class Customer {
   email: string;
   createdAt: Date;
   updatedAt: Date;
-  orders: Order[];
-  addresses: Address[];
+  orders?: Order[];
+  addresses?: Address[];
 }

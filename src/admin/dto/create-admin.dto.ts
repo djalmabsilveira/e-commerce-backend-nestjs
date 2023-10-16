@@ -7,6 +7,9 @@ export class CreateAdminDto {
   @IsString()
   readonly password: string;
 
+  @IsString()
+  readonly accessLevel: string;
+
   @IsEmail()
   readonly email: string;
 }

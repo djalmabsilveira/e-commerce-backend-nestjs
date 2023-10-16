@@ -29,6 +29,7 @@ CREATE TABLE `Admin` (
     `id` VARCHAR(191) NOT NULL,
     `adminName` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
+    `accessLevel` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
