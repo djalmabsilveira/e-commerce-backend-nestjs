@@ -24,14 +24,33 @@ model User {
 }
 
 model Product {
-  id          String      @id @default(uuid())
-  productName String
-  description String
-  price       Float
-  stock       Int
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  orderItems  OrderItem[]
+  id                      String      @id @default(uuid())
+  productName             String
+  price                   Float
+  discountPercentage      Float
+  stock                   Int
+  rating                  Float
+  brand                   String
+  category                String
+  subCategory             String
+  imageUrl                Json
+  variants                Json
+  introduction            String      @db.Text
+  technicalSpecifications Json
+  orderItems              OrderItem[]
+  Variant                 Variant[]
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+}
+
+model Variant {
+  id        String   @id @default(uuid())
+  color     String
+  imageUrl  Json
+  productId String?  @unique
+  product   Product? @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Order {

@@ -1,14 +1,18 @@
-import { OrderItem } from 'src/order/entities/orderItem.entity';
 import { Entity } from 'typeorm';
+import { Variant } from './variant.entity';
 
 @Entity()
 export class Product {
-  id: string;
   productName: string;
-  description: string;
   price: number;
+  discountPercentage: number;
+  rating: number;
   stock: number;
-  createdAt: Date;
-  updatedAt: Date;
-  orderItems: OrderItem[];
+  brand: string;
+  category: string;
+  subCategory: string;
+  introduction: string;
+  technicalSpecifications: string[];
+  imageUrl: string[];
+  variants?: Variant[];
 }
