@@ -1,12 +1,14 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsDefined,
   IsNumber,
   IsPositive,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { CreateVariantDto } from './create-variant.dto';
+import { CreateImageDto } from 'src/shared/dto/create-image.dto';
 
 export class CreateProductDto {
   @IsString()
@@ -37,16 +39,17 @@ export class CreateProductDto {
   @IsString()
   subCategory: string;
 
-  @IsArray()
-  @IsString({ each: true })
-  imageUrl: string[];
+  @IsString()
+  introduction: string;
+
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => CreateImageDto)
+  images: CreateImageDto[];
 
   @ValidateNested()
   @Type(() => CreateVariantDto)
   variants: CreateVariantDto[];
-
-  @IsString()
-  introduction: string;
 
   @IsArray()
   @IsString({ each: true })

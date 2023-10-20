@@ -8,7 +8,7 @@ import { User } from './entities/user.entity';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<string> {
     const { address, ...user } = createUserDto;
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -29,10 +29,7 @@ export class UserService {
       },
     });
 
-    return {
-      ...createdUser,
-      password: undefined,
-    };
+    return 'User Created';
   }
 
   async findByEmail(email: string): Promise<User> {

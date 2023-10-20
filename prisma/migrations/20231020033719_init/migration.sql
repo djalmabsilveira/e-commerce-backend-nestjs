@@ -23,8 +23,6 @@ CREATE TABLE `Product` (
     `brand` VARCHAR(191) NOT NULL,
     `category` VARCHAR(191) NOT NULL,
     `subCategory` VARCHAR(191) NOT NULL,
-    `imageUrl` JSON NOT NULL,
-    `variants` JSON NOT NULL,
     `introduction` TEXT NOT NULL,
     `technicalSpecifications` JSON NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -37,12 +35,20 @@ CREATE TABLE `Product` (
 CREATE TABLE `Variant` (
     `id` VARCHAR(191) NOT NULL,
     `color` VARCHAR(191) NOT NULL,
-    `imageUrl` JSON NOT NULL,
     `productId` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `Variant_productId_key`(`productId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ImageUrl` (
+    `id` VARCHAR(191) NOT NULL,
+    `url` VARCHAR(191) NOT NULL,
+    `productId` VARCHAR(191) NULL,
+    `variantId` VARCHAR(191) NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -81,12 +87,17 @@ CREATE TABLE `Address` (
     `updatedAt` DATETIME(3) NOT NULL,
     `userId` VARCHAR(191) NULL,
 
-    UNIQUE INDEX `Address_userId_key`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
 ALTER TABLE `Variant` ADD CONSTRAINT `Variant_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `Product`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ImageUrl` ADD CONSTRAINT `ImageUrl_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `Product`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ImageUrl` ADD CONSTRAINT `ImageUrl_variantId_fkey` FOREIGN KEY (`variantId`) REFERENCES `Variant`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Order` ADD CONSTRAINT `Order_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

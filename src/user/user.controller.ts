@@ -10,9 +10,7 @@ export class UserController {
 
   @IsPublic()
   @Post('/create')
-  async create(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<User> {
+  async create(@Body() createUserDto: CreateUserDto): Promise<string> {
     return await this.userService.create(createUserDto);
   }
 }
