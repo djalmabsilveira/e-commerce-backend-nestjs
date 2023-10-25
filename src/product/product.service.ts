@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { ImageUrl, TechnicalSpecification, Variant } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateVariantDto } from './dto/create-variant.dto';
+import { CreateImageDto } from 'src/shared/dto/create-image.dto';
+import { CreateTechnicalSpecificationDto } from './dto/create-technical-specifications.dto';
 
 @Injectable()
 export class ProductService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
-  }
+  constructor(private readonly prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all product`;
-  }
+  async create(createProductDto: CreateProductDto): Promise<string> {
+    const { technicalSpecifications, images, variants, ...productData } =
+      createProductDto;
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
-  }
+    await this.prisma.product.create({
+      data: {
+        ...productData,
+        images: { create: images },
+        variants: {
+          create: variants.map((variant) => ({
+            ...variant,
+            images: { create: variant.images },
+          })),
+        },
+        technicalSpecifications: { create: technicalSpecifications },
+      },
+    });
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+    return 'Product created!';
   }
 }

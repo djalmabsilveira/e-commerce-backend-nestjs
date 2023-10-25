@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsDefined,
   IsEmail,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -10,9 +11,12 @@ import {
 } from 'class-validator';
 import { CreateAddressDto } from 'src/shared/dto/create-address.dto';
 
-export class CreateAdminDto {
+export class CreateUserDto {
   @IsString()
-  adminName: string;
+  name: string;
+
+  @IsEmail()
+  email: string;
 
   @IsString()
   @MinLength(4)
@@ -22,11 +26,9 @@ export class CreateAdminDto {
   })
   password: string;
 
+  @IsOptional()
   @IsString()
-  accessLevel: string;
-
-  @IsEmail()
-  email: string;
+  classLevel: string;
 
   @IsDefined()
   @ValidateNested()
