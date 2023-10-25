@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { CreateVariantDto } from './create-variant.dto';
 import { CreateImageDto } from 'src/shared/dto/create-image.dto';
+import { CreateTechnicalSpecificationDto } from './create-technical-specifications.dto';
 
 export class CreateProductDto {
   @IsString()
@@ -51,7 +52,8 @@ export class CreateProductDto {
   @Type(() => CreateVariantDto)
   variants: CreateVariantDto[];
 
-  @IsArray()
-  @IsString({ each: true })
-  technicalSpecifications: string[];
+  @IsDefined()
+  @ValidateNested()
+  @Type(() => CreateTechnicalSpecificationDto)
+  technicalSpecifications: CreateTechnicalSpecificationDto[];
 }

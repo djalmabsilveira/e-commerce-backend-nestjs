@@ -1,5 +1,6 @@
 import { Entity } from 'typeorm';
 import { Variant } from './variant.entity';
+import { TechnicalSpecification } from './technical-specifications.entity';
 
 @Entity()
 export class Product {
@@ -12,7 +13,7 @@ export class Product {
   category: string;
   subCategory: string;
   introduction: string;
-  technicalSpecifications: string[];
+  technicalSpecifications: TechnicalSpecification[];
   imageUrl: string[];
   variants?: Variant[];
 }
